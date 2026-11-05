@@ -1,0 +1,88 @@
+FUNCTIONALITY AUDIT - 23 October 2026 - current edition
+
+19/19 C# suites pass; 25/25 mocked Chrome JavaScript tests pass.
+The executable is rebuilt from the included source.
+Current working folder: FlexHours-Windows; extension files are updated in place.
+Active-clock regression: 136h56 Pay Period minus 136h expected gives +56m,
+provided all future dates establish zero future hours. A past/current row
+mismatch does not invalidate separately verified future dates. Missing future
+dates and unexplained summary/subtotal mismatches still reject verification.
+The active-clock amount must exactly explain any REG + Time Off discrepancy.
+Manual Refresh now targets one selected month through the existing extension;
+desktop launch URL, popup auto-request, active-tab capture and inbox application
+are tested with an injected launcher/mocked Chrome. Live Chrome navigation and
+the authenticated page have not been exercised from this environment.
+Earlier blue stock palette restored. The prominent daily balance explicitly
+states ahead/behind, with green/red signed hours; unknown balances are labelled
+as waiting for verified hours. Positive, negative and unverified states are tested.
+Refinement: Chrome sync is the primary action, manual mode explains its pause,
+unfinished monthly flex is provisional, and daily differences follow As of.
+Holiday calendars are reused per year within each grid paint instead of being
+recomputed for every row. Disabled completion text remains readable in dark mode.
+UI smoke checks cover month navigation, comparison-date differences, leave and
+unread filters, unchanged monthly totals, action bounds and compact scrolling.
+Premium dashboard: selectable calendar, day breakdown, six-week months, leap
+days and refresh while a different tab is active are covered. Both themes and
+compact layouts are rendered and visually reviewed using synthetic data.
+Pause/Forget during a capture cannot restore removed or disabled watches;
+later watched months stop, and multi-month partial-read warnings remain visible.
+An already-started native capture may finish after Pause; no later month starts.
+
+Calculation: an independent oracle checks every day in 2020-2040. Malta 2026
+holiday dates match the government list; Good Friday is calculated. Weekdays
+count 8h, and paid holidays/leave remain within the target. Partial leave,
+weekends, leap years and date boundaries are covered. Targets follow the user's
+schedule rather than calculating annual leave entitlements.
+
+Flex ledger: a separate 144-month oracle and the supplied October-January
+example check +/-4h carry caps, uncapped actual balance, four quarterly resets,
+year boundaries, missing/incomplete months and dependent-month updates.
+
+Persistence: old formats, atomic saves, unchanged-state writes, previous
+backups, corrupt-primary recovery, protected unreadable files, actual desktop
+closing/reopening and save-failure messages are tested. Existing connection
+settings survive load/save; no installer or browser-profile reset is invoked.
+
+Daily source: screenshot-derived card fixtures and simulated DOM trees cover
+work before/after date labels, repeated totals, blank days, PTO, sick, holidays,
+unpaid leave, grey prior-month dates, unsupported rows, complete reconciliation
+and partial readings. The 2 October example yields 2h23 worked + 5h sick = 7h23.
+A regression explicitly checks that 5 October's 7h56 stays on 5 October.
+
+Main UI: Timesheet days is first, all month dates remain visible, recognised
+hours populate categories and totals, and unknown readings show '-' / Not read.
+Partial results are marked Not reconciled and do not drive daily balances.
+Monthly totals, daily differences and Upcoming leave use explicit dated data.
+Manual calendar remains an optional fallback, not a required sick/PTO entry.
+
+Future months: December vacation capture during October, separate monthly
+inbox files, unchanged October balance, upcoming-list display and persisted
+future data are tested. Distinct month URLs can be watched together. If URLs
+are identical, a future month is read once and current automatic sync settings
+are preserved; unverified automatic month navigation is not attempted.
+
+Chrome integration: bounded messages, origin checks, malformed input, snapshot
+de-duplication/staleness, file watcher updates, opt-in controls, manual pause,
+company permissions, inactive-tab cleanup, SSO redirects, alarms, watch-list
+migration and settings preservation are tested. A real helper subprocess
+returns a correctly framed error for malformed input without writing data.
+
+Appearance: light/dark palettes, saved custom colours, contrast validation,
+launch/progress completion and disabled animation paths are tested. Preview
+windows are visually inspected. CPU/RAM use is not benchmarked.
+
+REMAINING LIVE CHECKS
+Actual Chrome extension reload/registration and BambooHR DOM extraction have
+not been exercised through an authenticated account in this audit. The user
+reported that summary sync already runs; the latest row fix needs a fresh live
+capture. Date labels, incomplete month rendering or new leave formats can still
+need mapping. A separate Time Off / vacation-list page is not yet supported.
+Only the Timesheet allocations actually captured can appear in Upcoming leave.
+No personal saved state, session, cookies or registry registration was changed
+by the test suite. The user removed the old duplicate release directory.
+Damaged per-month inbox files are reported without blocking healthy months.
+Future-month calendar fallback uses the timesheet month, not the capture month.
+
+Reproduce: .\test.ps1 -RequireChromeTests (Node.js required for JS tests).
+Build: .\build.ps1. Package: .\package.ps1.
+See test-results.txt and chrome-extension-test-results.txt for current output.

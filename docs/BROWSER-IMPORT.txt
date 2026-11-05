@@ -1,0 +1,75 @@
+FlexHours browser edition — no API key or OAuth setup
+
+1. Extract the ZIP and run bin/FlexHours-Browser.exe.
+2. Select the month to calculate. Leave As of set to today for today's balance.
+3. Click Import from BambooHR.
+4. Enter your company subdomain (e.g. mycompany) or BambooHR website address.
+5. Click Open BambooHR. It opens a separate Edge/Chrome window.
+6. Sign in normally, including any company SSO or MFA. Open your own Timesheet
+   for the selected month and keep only one BambooHR tab open in that window.
+7. Return to FlexHours and click Read summary.
+8. Check the figures and confirm the page is for the selected month AND year.
+   BambooHR's summary may show the month without the year.
+9. If you know the holiday/leave hours dated AFTER the As of date that are
+   already included in Pay Period total, enter them and tick the confirmation.
+   Enter 0 if there are no future credits. Include BOTH holidays and approved
+   paid leave, without counting either twice.
+10. Click Import into month.
+
+Only the visible summary is imported. It cannot tell us which dates time off
+belongs to. Without confirmed future credits, monthly remaining hours work,
+but Ahead/Behind shows Check leave. This is deliberate: unverified future
+leave must not be presented as hours already earned through today.
+
+Example from your October summary:
+ - Pay Period total: 133h 34m
+ - REG: 128h 34m
+ - Time Off: 5h
+ - October 2026 target: 176h; remaining: 42h 26m.
+ - If all 5h are future credits, balance on 22 Oct is +34m.
+ - If all 5h are on/before 22 Oct, balance is +5h 34m.
+
+Import again whenever you want an updated total. This version does not sync on
+a schedule or automatically click through your account. If you change As of
+after importing, reimport and reconfirm future credits for that date.
+
+Fallback: if browser automation is blocked, select and copy the visible
+timesheet summary in your normal browser, then use Paste summary. This uses
+the same parser and preview. No cookie export or browser extension is needed.
+
+Your session stays in an app-specific Edge/Chrome profile on your computer:
+%LOCALAPPDATA%\FlexHours\BambooBrowser
+It is separate from your normal browser profile. Sign in again if BambooHR
+expires it. The app never reads or exports passwords, cookies or tokens.
+It reads visible text only, on your entered company's HTTPS BambooHR domain.
+The separate browser uses a random local debugging port to allow this read;
+close its window when finished. Company browser policies may disable this.
+
+Imported totals save to the same months.json used by earlier app versions.
+Use manual entries returns the month to editable total/leave fields. Previous
+manual leave entries remain available. Do not run two app versions together.
+
+Supported summary format is the English month summary shown in your screenshot:
+133h 34m / Pay Period / Oct 1-31 / Paid Hours / 128h 34m REG / 5h Time Off.
+Unsupported or conflicting figures are rejected. If BambooHR changes its page
+layout or language, use Paste summary or manual entry until the parser is updated.
+
+Validation: parser, calculation and persistence tests pass. Desktop import
+window renders correctly. Live BambooHR extraction was not exercised in this audit against
+your signed-in page. Local loopback networking is restricted in the build
+environment, so the actual browser-to-app connection could not be tested here.
+
+The earlier OAuth service is not included in this browser-only edition.
+
+Saved-state update: the selected month, comparison date, Today preference,
+monthly inputs and last import are restored on launch. Today advances daily;
+BambooHR totals remain a saved snapshot until you import again.
+
+
+Audit update:
+The total must include worked hours only through the comparison date. A monthly
+summary cannot reconstruct an earlier daily work ledger. New imports confirm
+this condition. Future credits cannot exceed the total or remaining weekdays.
+Pending/failed reads clear the old summary and block import until finished.
+Closing the dialog cancels its browser request; editing credits clears their
+confirmation. No network login or cookie-reuse test was performed in this audit.

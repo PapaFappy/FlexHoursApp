@@ -1,0 +1,14 @@
+Chrome sync 1.4.0
+
+Automatic refresh first reads a loaded tab matching the saved Timesheet URL without activating, reloading or closing it. Frozen, discarded, loading or missing tabs use a temporary inactive tab. A failed existing-tab read retries once in that helper.
+
+The HTML reader supports background pages with empty innerText or no layout rectangles, excluding hidden elements and scripts. It does not calculate unobserved elapsed clock time. Website-side background suspension can still leave HTML stale; a live signed-in check is needed to assess that behavior.
+
+The popup shows the saved Timesheet link and offers Open Timesheet. A pasted HTTPS company link can connect directly without finding an active BambooHR tab. Existing saved connections and intervals are retained. Reload the existing extension in chrome://extensions to activate changed files; no reinstall or helper setup is required.
+
+Validation: 19 desktop suites and 30 extension tests passed. Live BambooHR authentication/network behavior was not exercised.
+
+Chrome sync 1.4.1: Apply interval saves and updates the alarm without reconnecting or reading BambooHR. Unsaved interval selections survive background status updates. Schedule shows the next expected Chrome alarm time. Pause becomes Resume; applying an interval preserves pause. Direct-link connection works even when an unrelated website is active. 34 extension tests passed. Chrome may delay scheduled alarms; the displayed time is approximate.
+
+Chrome sync 1.4.2: serialized alarm restoration prevents an old startup timer overwriting Apply. Apply resets and reads back Chrome's actual alarm before confirming success. Schedule displays the actual alarm interval and flags a saved/actual mismatch. Older asynchronous popup reads cannot overwrite newer status. Version is visible in the popup. 37 extension tests passed, including overlapping restoration, same-interval reset, missing-alarm failure and popup race checks. Live signed-in BambooHR timing is not exercised.
+

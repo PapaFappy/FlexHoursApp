@@ -1,0 +1,45 @@
+Monthly carry-over and quarterly reset
+
+Monthly difference = credited Pay Period hours minus the full monthly target.
+Pay Period hours include paid holidays and approved paid leave, as in BambooHR.
+Required monthly hours remain Monday-Friday days x 8h.
+
+Carry-over = previous completed month's FINAL flex balance, capped at +4h/-4h.
+Final flex balance = monthly difference + carry-over. The final displayed
+balance is never capped. Calculations use minutes to preserve partial hours.
+
+January, April, July and October always start with 0 carry-over. A new year's
+January starts at 0, regardless of the preceding December balance.
+
+The main window has three flex cards and a Flex balances by month history tab.
+Double-click a history row to open that month. Green rows start a new quarter.
+The original Ahead/Behind card is the balance through the selected date BEFORE
+carry-over. The new monthly difference compares against the FULL-month target.
+An ongoing month's flex balance is provisional, not an end-of-month result.
+Remaining hours in the top cards are still the contractual monthly shortfall
+before carry-over; the flex cards show the separate adjustment.
+
+To record a completed month:
+ - Select the past month, enter or import its final Pay Period total.
+ - Tick Month total confirmed complete once the full total is correct.
+ - Its final flex balance can now carry to the following month (within the
+   same quarter). You can confirm on the last calendar date of the month too.
+ - Updating a completed month's total recalculates dependent months instantly.
+
+If a needed previous month is missing or not marked complete, the carry/final
+balance shows Pending with a reason. The app does not silently assume 0.
+Enter the missing month's final total and mark it complete to resolve this.
+At a quarter reset, no prior-month data is needed.
+Opening an empty month does not count it as a recorded zero-hours month.
+Confirming a completed month with a zero total explicitly records zero hours.
+
+All source data, completion flags and calculated balances save automatically.
+Balances are recalculated from source data when opening the app and saving.
+Existing saved months are preserved. Earlier versions did not record completion;
+confirm their past-month final totals before carrying them forward.
+
+Example:
+October:  +6h difference,  0h carry, +6h final.
+November: -7h difference, +4h carry, -3h final.
+December: +5h difference, -3h carry, +2h final.
+January:  -2h difference,  0h carry, -2h final (reset).

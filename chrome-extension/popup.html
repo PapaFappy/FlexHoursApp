@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>FlexHours Chrome Sync</title><link rel="stylesheet" href="popup.css"></head>
+<body>
+<header><img src="icon.png" alt=""><div><h1>FlexHours</h1><p>Your Chrome session. Your hours.</p></div></header>
+<p>Save your Timesheet link once. Refresh uses that link with your existing Chrome login.</p>
+<label for="timesheet">Timesheet link</label><input type="url" id="timesheet" placeholder="https://yourcompany.bamboohr.com/employees/timesheet/?id=...">
+<button id="open">Open Timesheet</button>
+<label for="month">Month shown on this Timesheet</label><input type="month" id="month">
+<label for="interval">Automatic refresh</label>
+<select id="interval"><option value="1">Every minute</option><option value="5" selected>Every 5 minutes</option><option value="10">Every 10 minutes</option><option value="15">Every 15 minutes</option><option value="30">Every 30 minutes</option><option value="60">Every hour</option></select>
+<button id="apply">Apply interval</button><p id="schedule" class="small" role="status"></p>
+<button id="connect">Save connection &amp; start</button>
+<p class="small">Refresh reads the saved Timesheet HTML without switching tabs. If unavailable, it briefly loads a background tab and closes it afterward. Chrome must remain running.</p>
+<div class="actions"><button id="refresh">Refresh now</button><button id="pause">Pause</button></div>
+<p id="watched" class="small"></p><button id="forget">Forget watched months</button>
+<p class="small">Extension 1.4.2</p>
+<p id="status" role="status">Loading connection status...</p>
+<p class="small">Keep the extension folder in its current location when updating. Setup is only needed for a new connection. Verified dated rows populate leave automatically in FlexHours; summary-only captures need review.</p>
+<p class="small">Watched months stay fixed. When the month changes, select that month and save the connection using the same link.</p>
+<script type="module" src="popup.mjs"></script>
+</body></html>

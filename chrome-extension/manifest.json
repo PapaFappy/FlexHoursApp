@@ -1,0 +1,12 @@
+{
+  "manifest_version": 3,
+  "name": "FlexHours Chrome Sync",
+  "version": "1.4.2",
+  "description": "Send your own BambooHR timesheet to the local FlexHours app using your normal Chrome login.",
+  "minimum_chrome_version": "120",
+  "permissions": ["activeTab", "scripting", "storage", "alarms", "nativeMessaging"],
+  "optional_host_permissions": ["https://*.bamboohr.com/*"],
+  "background": { "service_worker": "worker.mjs", "type": "module" },
+  "action": { "default_popup": "popup.html", "default_icon": "icon.png" },
+  "icons": { "48": "icon.png" }
+}

@@ -1,0 +1,101 @@
+CHROME SYNC - current edition
+
+EXISTING INSTALLATIONS
+Keep the current folder paths and extension installed. Restart FlexHours and
+Reload FlexHours Chrome Sync in chrome://extensions once to load updated code.
+Do not remove/reinstall the extension or re-run native setup for an in-place
+update. Saved watches, enabled sync, cookies and local month records are not
+cleared. No changes are made to the Chrome profile or native-host registration.
+
+FIRST-TIME SETUP ONLY
+1. Load chrome-extension as an unpacked extension in chrome://extensions.
+2. Run setup-chrome.ps1 with the ID Chrome displays. It registers the helper
+   under your own Windows account; administrator rights are not required.
+3. Open your own current-month BambooHR Timesheet, with the full daily list and
+   monthly summary loaded. Choose the matching month in the extension popup.
+4. Connect & enable auto refresh and grant your company website permission.
+5. In the app's Chrome sync dialog enter that same company, enable receiving
+   updates and Save. Leave the manual-calendar fallback off for dated imports.
+
+AUTOMATIC OPERATION
+Chrome's normal website session authenticates the page. No password/cookie
+export, public API key or OAuth server is used. Every five minutes by default,
+the extension loads watched Timesheet URLs in inactive temporary tabs, reads
+them and closes its own inactive tabs. Activated tabs are left open. Expired
+SSO redirects are cleaned up too. Refresh intervals can be 1/5/10/15/30/60 minutes.
+Chrome must be running. The helper exits after each capture. The desktop app
+uses a file watcher and a once-per-minute fallback, without an idle render loop.
+The browser session can expire normally; the extension cannot bypass sign-in.
+
+DATED WORK AND LEAVE
+The reader extracts each date's containing DOM card, independently of CSS text
+order. It also supports explicit date/paid-total tables and a conservative
+plain-text fallback. Duplicate displays of a daily total count once. Blank
+and leave-only days can have zero worked hours, subject to reconciliation.
+The provided example is: 2h23 worked + 5h sick = 7h23 paid on 2 October.
+Grey adjacent-month rows are filtered out.
+
+Timesheet days is the main app table. Worked, PTO/vacation, sick, holiday,
+other paid leave, unpaid hours and totals are populated automatically. Missing
+dates stay visible as Not read. Recognised partial entries show Not reconciled;
+they are available to inspect, while per-day differences require reconciliation.
+The main balance always uses the Pay Period summary. A complete valid ledger
+can supply its future deduction; alternatively, every future date must be read
+and validated separately. An incomplete active/past day then does not block the
+balance. Missing future dates never imply zero. The running clock is accepted
+in the summary only when its amount exactly explains a subtotal discrepancy.
+The manual leave calendar is retained only as an optional fallback.
+
+REFRESH NOW
+The desktop Refresh now button opens the existing extension status page with
+an automatic request for the selected connected month. The existing helper
+registration supplies the extension ID. No new connection or permission is
+created. In the extension popup, Refresh now uses the current Timesheet tab
+when it matches; otherwise the saved Timesheet is captured in a temporary tab.
+
+FUTURE MONTHS AND VACATION
+Open December's Timesheet in Chrome and select December 2026 in the extension
+before connecting that page. The extension retains existing watched months.
+Up to six months with distinct saved URLs can be watched. Each month has its
+own local snapshot, so December cannot overwrite October's total. Upcoming
+leave lists future dated PTO/vacation, sick, holidays and other leave across all
+read months. Status indicates whether the source month reconciles.
+
+Some BambooHR pages use the same URL for every selected month. Without a
+verified month-navigation control, that URL cannot reopen a chosen future month
+reliably. In this case the extension captures the visible future month once
+for review and leaves existing automatic sync unchanged. It does not falsely
+claim the extra month is watched. A popup message explains the distinction.
+
+Future leave may be visible before it is included in a future Pay Period total.
+Those readings can be shown as not reconciled, but do not count as paid credit
+in current calculations. Upcoming leave is not an annual leave entitlement
+balance. A separate Time Off / vacation list has not been mapped in this build;
+only entries actually present in the dated Timesheets are imported.
+
+PAUSE AND RECONNECT
+Pause in the extension stops its background page loads. Manual entries or a
+manual browser import in the app pauses automatic receiving so it cannot
+overwrite manual values. These are separate switches. Forget watched months
+clears the extension's watch list only when explicitly clicked. It is not part
+of an update. Reconnecting one month with the same company preserves others.
+
+FILES / PRIVACY
+The main app remains bin\FlexHours-Browser.exe; the required helper remains
+bin\FlexHours-ChromeHost.exe. Source and extension directories are included.
+Existing state stays in %LOCALAPPDATA%\FlexHours\months.json. Chrome's normal
+profile and the earlier dedicated browser profile are not moved or deleted.
+Only dates, categories, hours, company and capture time are retained. Raw page
+text, medical notes, cookies and tokens are not stored in the month snapshots.
+Per-month native inbox files are latest-YYYY-MM.json; the old latest.json is
+still read for compatibility. No remote service receives the captured data.
+
+VERIFICATION
+19 C# suites and 37 mocked Chrome JavaScript tests pass. They cover reordered
+DOM cards, blank rows, partial failures, visible daily population, unknown vs
+zero hours, December vacation, multi-month isolation, watch preservation,
+same-URL limitations, file watching, save/reopen and existing calculations.
+No live authenticated BambooHR page was read in these tests. The reported
+row-parsing error has regression coverage; a fresh capture is still needed to
+confirm extraction against the user's exact live DOM.
+

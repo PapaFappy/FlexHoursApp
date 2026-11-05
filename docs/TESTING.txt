@@ -1,0 +1,20 @@
+TESTING
+
+Run .\test.ps1 -RequireChromeTests to compile and run the C# suite and the
+Chrome JavaScript tests. Node.js is needed only for the JavaScript tests.
+See the generated docs\test-results.txt and docs\chrome-extension-test-results.txt for results from your latest run; these reports are not committed.
+
+C# coverage: work/holiday/leave rules, 21-year daily oracle, carry-over and
+quarterly reset, 144-month ledger oracle, malformed data, summaries, save and
+backup recovery, actual desktop editing/navigation/reopening, appearance,
+bounded animations, Chrome native framing, dated-card/table parsing, partial
+readings, per-date UI values, future-month vacation and sync preservation.
+JS coverage: source origins and permissions, bounded refresh, temporary-tab
+cleanup and SSO, native-host errors, stable capture, exact DOM-card boundaries,
+multi-month watches, future-month same-URL read without disrupting current sync.
+
+Synthetic fixtures and isolated temporary state are used. No live credentials,
+Chrome profile, native-host registration or real monthly state is modified.
+A fresh live Chrome capture is needed to verify the latest DOM extraction fix.
+Generated preview/test binaries go under tests\output and are not distributed.
+
